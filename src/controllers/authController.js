@@ -19,13 +19,13 @@ exports.register = async (req, res) => {
     const { username, email, password } = req.body;
 
     const existingUser = await User.findOne({
-      where: { email },
+      where: { email, username },
     });
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "Пользователь с таким email уже существует",
+        message: "Такая почта или имя пользователя",
       });
     }
 
@@ -59,9 +59,9 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { username } });
 
     if (!user || !(await user.validatePassword(password))) {
       return res.status(401).json({
