@@ -1,9 +1,9 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken"); // jwt-токен, который используется как "пропуск чтобы постоянно не показывать паспорт(важно не кодировать важную информацию)"
 
-console.log('🔍 User model тип:', typeof User);
-console.log('🔍 User.findOne тип:', typeof User.findOne);
-console.log('🔍 User model ключи:', Object.keys(User));
+console.log(' User model тип:', typeof User);
+console.log(' User.findOne тип:', typeof User.findOne);
+console.log(' User model ключи:', Object.keys(User));
 //генерация токена
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
