@@ -10,14 +10,23 @@ exports.protect = async (req, res, next) => {
         }
 
         if(!token) {
-            res.status(401).json({
+            return res.status(401).json({
                 success: false,
                 message: 'Доступ запрещен'
             })
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET); // функция проверяет корректность токена и не был ли он изменен и его срок действия
-        req.user = await User.findByPk(decoded.user.id);
+        // Поддерживаем разные форматы полезной нагрузки токена: { userId } или { user: { id } }
+        const userId = decoded?.userId || decoded?.user?.id || decoded?.id;
+        if (!userId) {
+            return res.status(401).json({ success: false, message: 'Невалидный токен (нет идентификатора пользователя)' });
+        }
+        req.user = await User.findByPk(userId);
+        
+        if (!req.user) {
+            return res.status(401).json({ success: false, message: 'Пользователь не найден' });
+        }
 
         next() // функция для перехода к следующей функции
     } catch(e) {

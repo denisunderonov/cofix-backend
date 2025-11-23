@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend: dev",
+      "type": "shell",
+      "command": "npm run dev",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "frontend: dev",
+      "type": "shell",
+      "command": "npm run dev",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/cofix-react-ts"
+      },
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run both (backend + frontend)",
+      "dependsOn": ["backend: dev", "frontend: dev"],
+      "dependsOrder": "parallel",
+      "runOptions": { "reevaluateOnRerun": true }
+    }
+  ]
+}

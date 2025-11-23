@@ -24,8 +24,21 @@ const User = sequelize.define('User', {
   },
   role: {
     type: DataTypes.STRING,
+    // DB migration creates users.role with default 'user' — keep model aligned
     defaultValue: 'user'
+  },
+  avatar: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  reputation: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   }
+}, {
+  tableName: 'users',
+  timestamps: true,
+  underscored: true,
 });
 
 //хук, который вызовается до того, как user будет создан
